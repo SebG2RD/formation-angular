@@ -1,0 +1,94 @@
+h1 { text-align: center; text-transform: capitalize; }
+
+.search {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto 24px;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 6px;
+    width: 100%;
+    background: transparent;
+    transition: background 0.15s;
+  }
+
+  &:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+
+  img  { width: 96px; height: 96px; object-fit: contain; }
+  .num { font-size: 12px; color: #999; }
+  .name { text-transform: capitalize; font-weight: 600; }
+}
+
+.card.type-normal::before { background: #A8A77A; }
+.card.type-fire::before { background: #EE8130; }
+.card.type-water::before { background: #6390F0; }
+.card.type-electric::before { background: #F7D02C; }
+.card.type-grass::before { background: #7AC74C; }
+.card.type-ice::before { background: #96D9D6; }
+.card.type-fighting::before { background: #C22E28; }
+.card.type-poison::before { background: #A33EA1; }
+.card.type-ground::before { background: #E2BF65; }
+.card.type-flying::before { background: #A98FF3; }
+.card.type-psychic::before { background: #F95587; }
+.card.type-bug::before { background: #A6B91A; }
+.card.type-rock::before { background: #B6A136; }
+.card.type-ghost::before { background: #735797; }
+.card.type-dark::before { background: #705746; }
+.card.type-dragon::before { background: #6F35FC; }
+.card.type-steel::before { background: #B7B7CE; }
+.card.type-fairy::before { background: #D685AD; }
+
+.load-more {
+  display: block;
+  margin: 24px auto 0;
+  padding: 12px 20px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: white;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.load-more:hover:not(:disabled) {
+  background: #f8f8f8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.load-more:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.info { text-align: center; color: #888; padding: 32px; }
