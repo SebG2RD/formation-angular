@@ -1,0 +1,11 @@
+import { Component } from '@angular/core';
+import { ContactManager } from './components/contact-manager/contact-manager';
+
+@Component({
+  selector: 'app-root',
+  imports: [ContactManager],
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
+})
+export class App {
+}

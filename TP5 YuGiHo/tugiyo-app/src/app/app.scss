@@ -1,0 +1,12 @@
+/* ============================================
+   APP CONTAINER STYLES
+   ============================================ */
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+router-outlet {
+  display: block;
+}

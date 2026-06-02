@@ -1,0 +1,65 @@
+<div class="manager">
+  <h1>📇 Carnet de contacts</h1>
+
+  <form
+    #f
+    class="form"
+    (submit)="$event.preventDefault(); enregistrer({
+      nom: nomInput.value, email: emailInput.value, tel: telInput.value
+    }) && f.reset()"
+  >
+    <h3>{{ enEdition() ? '✏️ Modifier' : '➕ Nouveau contact' }}</h3>
+
+    <input #nomInput type="text" placeholder="Nom" [value]="enEdition()?.nom ?? ''" required />
+    <input #emailInput type="email" placeholder="Email" [value]="enEdition()?.email ?? ''" required />
+    <input #telInput type="tel" placeholder="Tel" [value]="enEdition()?.tel ?? ''" />
+
+    @if (formError()) {
+      <p class="form-error">⚠️ {{ formError() }}</p>
+    }
+
+    <div class="actions">
+      <button type="submit">{{ enEdition() ? 'Mettre a jour' : 'Ajouter' }}</button>
+      @if (enEdition()) {
+        <button type="button" class="ghost" (click)="annulerEdition()">Annuler</button>
+      }
+    </div>
+  </form>
+
+  <!-- 1) RECHERCHE -->
+  <input
+    #rech
+    class="recherche"
+    type="search"
+    placeholder="🔎 Rechercher (nom, email, tel)…"
+    [value]="recherche()"
+    (input)="recherche.set(rech.value)"
+  />
+
+  @if (loading()) {
+    <p class="info">⏳ Chargement…</p>
+  } @else if (error()) {
+    <p class="error">❌ {{ error() }} <button (click)="charger()">Reessayer</button></p>
+  } @else {
+    <ul class="liste">
+      @for (c of contactsFiltres(); track c.id) {
+        <li>
+          <div class="infos">
+            <strong>{{ c.nom }}</strong>
+            <span>{{ c.email }} · {{ c.tel }}</span>
+          </div>
+          <div class="boutons">
+            <button (click)="editer(c)">✏️</button>
+            <button class="danger" (click)="supprimer(c)">🗑️</button>
+          </div>
+        </li>
+      } @empty {
+        @if (contacts().length === 0) {
+          <li class="info">Aucun contact. Ajoute le premier !</li>
+        } @else {
+          <li class="info">Aucun résultat pour « {{ recherche() }} ».</li>
+        }
+      }
+    </ul>
+  }
+</div>
