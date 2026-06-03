@@ -1,0 +1,148 @@
+# =====================================================================
+#  .gitignore — template complet (dépôt formation-angular)
+#  Couvre secrets, dépendances, builds, IA, OS et éditeurs.
+# =====================================================================
+
+# ----- Secrets & variables d'environnement -------------------------
+.env
+.env.*
+*.local
+!.env.example
+!.env.sample
+!.env.template
+.envrc
+secrets.json
+*.pem
+*.p12
+*.key
+*.keystore
+credentials.json
+service-account*.json
+
+# ----- Dépendances -------------------------------------------------
+node_modules/
+jspm_packages/
+bower_components/
+.pnp
+.pnp.*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnpm-store/
+vendor/
+
+# ----- Logs & rapports de debug ------------------------------------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+report.[0-9]*.json
+
+# ----- Sorties de build --------------------------------------------
+dist/
+build/
+out/
+out-tsc/
+tmp/
+.tmp/
+/bazel-out
+*.tsbuildinfo
+.cache/
+
+# ----- Angular / outils web ----------------------------------------
+.angular/
+.angular/cache
+.sass-cache/
+connect.lock
+/libpeerconnection.log
+testem.log
+/typings
+.vite/
+.parcel-cache/
+
+# ----- Tests & couverture ------------------------------------------
+coverage/
+*.lcov
+.nyc_output/
+.vitest/
+playwright-report/
+test-results/
+
+# ----- Caches de linters / formatters ------------------------------
+.eslintcache
+.stylelintcache
+.prettiercache
+
+# ----- Assistants IA (ne jamais publier) ---------------------------
+# Claude Code / Anthropic
+.claude/
+.claude.json
+CLAUDE.md
+CLAUDE.local.md
+.anthropic/
+# MCP (Model Context Protocol) — config d'outils IA, où qu'elle soit
+.mcp.json
+mcp.json
+**/mcp.json
+.vscode/mcp.json
+# Cursor
+.cursor/
+.cursorrules
+.cursorignore
+# GitHub Copilot
+.github/copilot-instructions.md
+.copilot/
+# Aider
+.aider*
+# Windsurf / Codeium
+.windsurf/
+.windsurfrules
+.codeium/
+# Continue / Cline / Roo
+.continue/
+.clinerules
+.roo/
+# Gemini / autres agents
+.gemini/
+GEMINI.md
+AGENTS.md
+.agents/
+.ai/
+.specstory/
+# Artefacts générés par les skills
+design-system/
+
+# ----- Éditeurs & IDE ----------------------------------------------
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*~
+.history/
+# VS Code : on versionne quelques réglages partagés, on ignore le reste
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ----- Système d'exploitation --------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
