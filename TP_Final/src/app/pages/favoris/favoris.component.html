@@ -1,0 +1,23 @@
+<section class="page">
+  <header class="page__header">
+    <h1>Mes favoris</h1>
+    <p>Les favoris sont sauvegardés dans votre navigateur (rechargez la page pour vérifier).</p>
+  </header>
+
+  @if (favoris().length === 0) {
+    <p class="empty">
+      Aucun favori pour le moment.
+      <a routerLink="/characters">Parcourir les personnages</a>
+    </p>
+  } @else {
+    <div class="grid stagger">
+      @for (c of favoris(); track c.id; let i = $index) {
+        <app-character-card
+          [character]="c"
+          [style.--i]="i"
+          (toggleFavori)="toggleFavori($event)"
+        />
+      }
+    </div>
+  }
+</section>

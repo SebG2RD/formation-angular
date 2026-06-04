@@ -1,0 +1,52 @@
+<section class="page">
+  @if (loading()) {
+    <app-loader />
+  } @else if (error(); as err) {
+    <app-error-message [message]="err" (retry)="retry()" />
+  } @else if (character(); as character) {
+    <header class="detail-header">
+      <div class="detail-portrait">
+        <img [src]="character.image" [alt]="character.name" />
+      </div>
+      <div>
+        <h1>{{ character.name }}</h1>
+        <p>{{ character.status | status }} — {{ character.species }}</p>
+        <button type="button" class="btn" (click)="toggleFavori(character)">
+          {{ isFavori(character) ? '★ Retirer des favoris' : '☆ Ajouter aux favoris' }}
+        </button>
+      </div>
+    </header>
+
+    <section class="detail-block">
+      <h2>Origine &amp; lieu actuel</h2>
+      <p>
+        Origine :
+        @if (locationId(character.origin.url); as originId) {
+          @if (originId > 0) {
+            <a [routerLink]="['/locations', originId]">{{ character.origin.name }}</a>
+          } @else {
+            {{ character.origin.name }}
+          }
+        }
+      </p>
+      <p>
+        Lieu actuel :
+        <a [routerLink]="['/locations', locationId(character.location.url)]">
+          {{ character.location.name }}
+        </a>
+      </p>
+    </section>
+
+    <section class="detail-block">
+      <h2>Épisodes</h2>
+      <div class="mini-grid stagger">
+        @for (ep of episodes(); track ep.id; let i = $index) {
+          <a [routerLink]="['/episodes', ep.id]" class="mini-card" [style.--i]="i">
+            <strong>{{ ep.episode }}</strong>
+            <span>{{ ep.name }}</span>
+          </a>
+        }
+      </div>
+    </section>
+  }
+</section>

@@ -1,0 +1,46 @@
+<section class="page">
+  <header class="page__header">
+    <h1>Personnages</h1>
+    <p class="badge">Liste via GraphQL</p>
+  </header>
+
+  <div class="filters">
+    <app-search-bar (searchChange)="onSearch($event)" />
+    <label class="filter-status">
+      <span>Statut</span>
+      <select (change)="onStatusChange($event)">
+        <option value="">Tous</option>
+        <option value="alive">Vivant</option>
+        <option value="dead">Mort</option>
+        <option value="unknown">Inconnu</option>
+      </select>
+    </label>
+  </div>
+
+  @let vm = vm$ | async;
+  @if (loading()) {
+    <app-loader />
+  } @else if (error(); as err) {
+    <app-error-message [message]="err" (retry)="retry()" />
+  } @else if (vm) {
+    @if (vm.characters.length === 0) {
+      <p class="empty">Aucun personnage trouvé.</p>
+    } @else {
+      <div class="grid stagger">
+        @for (c of vm.characters; track c.id; let i = $index) {
+          <app-character-card
+            [character]="c"
+            [style.--i]="i"
+            (toggleFavori)="toggleFavori($event)"
+          />
+        }
+      </div>
+      <app-paginator
+        [currentPage]="currentPage()"
+        [totalPages]="vm.totalPages"
+        (prev)="prevPage()"
+        (next)="nextPage()"
+      />
+    }
+  }
+</section>

@@ -1,0 +1,47 @@
+<section class="page">
+  <header class="dash-hero">
+    <div class="dash-hero__text">
+      <span class="dash-hero__eyebrow">Dimension C-137</span>
+      <h1>Tableau de bord</h1>
+      <p>Vue d'ensemble de l'univers Rick &amp; Morty</p>
+    </div>
+    <div class="portal-orb dash-hero__portal" aria-hidden="true"></div>
+  </header>
+
+  @if (loading()) {
+    <app-loader />
+  } @else if (error(); as err) {
+    <app-error-message [message]="err" (retry)="reload()" />
+  } @else {
+    <div class="stats-grid stagger">
+      @for (card of statsCards(); track card.label; let i = $index) {
+        <a [routerLink]="card.link" class="stat-card" [style.--i]="i">
+          <span class="stat-card__label">{{ card.label }}</span>
+          <span class="stat-card__value" [countUp]="card.value">0</span>
+          <span class="stat-card__cta">Explorer →</span>
+        </a>
+      }
+    </div>
+
+    <section class="favoris-stats">
+      <h2>Favoris par statut</h2>
+      <div class="breakdown stagger">
+        <div class="breakdown__item" data-status="alive" [style.--i]="0">
+          <span class="breakdown__dot"></span>
+          <span class="breakdown__label">Vivants</span>
+          <span class="breakdown__value" [countUp]="repartitionFavoris().Alive">0</span>
+        </div>
+        <div class="breakdown__item" data-status="dead" [style.--i]="1">
+          <span class="breakdown__dot"></span>
+          <span class="breakdown__label">Morts</span>
+          <span class="breakdown__value" [countUp]="repartitionFavoris().Dead">0</span>
+        </div>
+        <div class="breakdown__item" data-status="unknown" [style.--i]="2">
+          <span class="breakdown__dot"></span>
+          <span class="breakdown__label">Inconnus</span>
+          <span class="breakdown__value" [countUp]="repartitionFavoris().unknown">0</span>
+        </div>
+      </div>
+    </section>
+  }
+</section>

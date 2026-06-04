@@ -1,0 +1,25 @@
+<section class="page">
+  @if (loading()) {
+    <app-loader />
+  } @else if (error(); as err) {
+    <app-error-message [message]="err" (retry)="retry()" />
+  } @else if (episode(); as episode) {
+    <header class="page__header">
+      <p class="code">{{ episode.episode }}</p>
+      <h1>{{ episode.name }}</h1>
+      <p>Diffusion : {{ episode.air_date }}</p>
+    </header>
+
+    <section class="detail-block">
+      <h2>Personnages de l'épisode</h2>
+      <div class="residents stagger">
+        @for (c of characters(); track c.id; let i = $index) {
+          <a [routerLink]="['/characters', c.id]" class="resident-card" [style.--i]="i">
+            <img [src]="c.image" [alt]="c.name" width="56" height="56" />
+            <span>{{ c.name }}</span>
+          </a>
+        }
+      </div>
+    </section>
+  }
+</section>

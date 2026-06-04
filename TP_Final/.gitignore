@@ -1,0 +1,92 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Secrets & variables d'environnement
+.env
+.env.*
+*.local
+!.env.example
+!.env.sample
+!.env.template
+.envrc
+secrets.json
+*.pem
+*.key
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# === Assistants IA / Claude (ne pas publier sur GitHub) ===
+# Claude Code / Anthropic
+.claude/
+.claude.json
+CLAUDE.md
+CLAUDE.local.md
+.anthropic/
+# MCP (config d'outils IA, où qu'elle soit)
+.mcp.json
+mcp.json
+**/mcp.json
+.vscode/mcp.json
+# Cursor
+.cursor/
+.cursorrules
+.cursorignore
+# GitHub Copilot
+.github/copilot-instructions.md
+.copilot/
+# Aider
+.aider*
+# Windsurf / Codeium
+.windsurf/
+.windsurfrules
+.codeium/
+# Continue / Cline / Roo
+.continue/
+.clinerules
+.roo/
+# Gemini / autres agents
+.gemini/
+GEMINI.md
+AGENTS.md
+.agents/
+.ai/
+.specstory/

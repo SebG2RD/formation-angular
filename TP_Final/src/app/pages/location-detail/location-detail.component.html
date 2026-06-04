@@ -1,0 +1,30 @@
+<section class="page">
+  @if (loading()) {
+    <app-loader />
+  } @else if (error(); as err) {
+    <app-error-message [message]="err" (retry)="retry()" />
+  } @else if (location(); as location) {
+    <header class="page__header">
+      <h1>{{ location.name }}</h1>
+      <p>{{ location.type }} — {{ location.dimension }}</p>
+    </header>
+
+    <section class="detail-block">
+      <h2>Résidents</h2>
+      @if (residents().length === 0) {
+        <p class="empty">Aucun résident connu.</p>
+      } @else {
+        <ul class="residents stagger">
+          @for (r of residents(); track r.id; let i = $index) {
+            <li [style.--i]="i">
+              <a [routerLink]="['/characters', r.id]">
+                <img [src]="r.image" [alt]="r.name" width="48" height="48" />
+                {{ r.name }}
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  }
+</section>

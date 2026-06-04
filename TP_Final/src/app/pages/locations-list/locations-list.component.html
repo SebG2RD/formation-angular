@@ -1,0 +1,29 @@
+<section class="page">
+  <header class="page__header">
+    <h1>Lieux</h1>
+  </header>
+
+  @let vm = vm$ | async;
+  @if (loading()) {
+    <app-loader />
+  } @else if (error(); as err) {
+    <app-error-message [message]="err" (retry)="retry()" />
+  } @else if (vm) {
+    <ul class="list stagger">
+      @for (loc of vm.locations; track loc.id; let i = $index) {
+        <li [style.--i]="i">
+          <a [routerLink]="['/locations', loc.id]" class="list-item">
+            <h3>{{ loc.name }}</h3>
+            <p>{{ loc.type | truncate:60 }} — {{ loc.dimension }}</p>
+          </a>
+        </li>
+      }
+    </ul>
+    <app-paginator
+      [currentPage]="currentPage()"
+      [totalPages]="vm.totalPages"
+      (prev)="prevPage()"
+      (next)="nextPage()"
+    />
+  }
+</section>

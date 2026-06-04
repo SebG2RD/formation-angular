@@ -1,0 +1,30 @@
+<section class="page">
+  <header class="page__header">
+    <h1>Épisodes</h1>
+  </header>
+
+  @let vm = vm$ | async;
+  @if (loading()) {
+    <app-loader />
+  } @else if (error(); as err) {
+    <app-error-message [message]="err" (retry)="retry()" />
+  } @else if (vm) {
+    <ul class="list stagger">
+      @for (ep of vm.episodes; track ep.id; let i = $index) {
+        <li [style.--i]="i">
+          <a [routerLink]="['/episodes', ep.id]" class="list-item">
+            <strong>{{ ep.episode }}</strong>
+            <h3>{{ ep.name }}</h3>
+            <p>{{ ep.air_date | truncate:40 }}</p>
+          </a>
+        </li>
+      }
+    </ul>
+    <app-paginator
+      [currentPage]="currentPage()"
+      [totalPages]="vm.totalPages"
+      (prev)="prevPage()"
+      (next)="nextPage()"
+    />
+  }
+</section>

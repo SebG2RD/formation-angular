@@ -1,0 +1,67 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { AsyncPipe } from '@angular/common';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { LocationService } from '../../services/location.service';
+import { PaginatorComponent } from '../../components/paginator/paginator.component';
+import { LoaderComponent } from '../../components/loader/loader.component';
+import { ErrorMessageComponent } from '../../components/error-message/error-message.component';
+import { TruncatePipe } from '../../pipes/truncate.pipe';
+
+@Component({
+  selector: 'app-locations-list',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    AsyncPipe,
+    RouterLink,
+    PaginatorComponent,
+    LoaderComponent,
+    ErrorMessageComponent,
+    TruncatePipe,
+  ],
+  templateUrl: './locations-list.component.html',
+  styleUrl: './locations-list.component.scss',
+})
+export class LocationsListComponent {
+  private readonly locationService = inject(LocationService);
+
+  readonly currentPage = signal(1);
+  readonly loading = signal(true);
+  readonly error = signal<string | null>(null);
+
+  readonly vm$ = toObservable(this.currentPage).pipe(
+    tap(() => {
+      this.loading.set(true);
+      this.error.set(null);
+    }),
+    switchMap((page) =>
+      this.locationService.getAll(page).pipe(
+        map((res) => ({ locations: res.results, totalPages: res.info.pages })),
+        catchError(() => {
+          this.error.set('Erreur lors du chargement des lieux.');
+          return of({ locations: [], totalPages: 1 });
+        }),
+      ),
+    ),
+    tap(() => this.loading.set(false)),
+  );
+
+  prevPage(): void {
+    this.currentPage.update((p) => Math.max(1, p - 1));
+  }
+
+  nextPage(): void {
+    this.currentPage.update((p) => p + 1);
+  }
+
+  retry(): void {
+    this.currentPage.update((p) => p);
+  }
+}
